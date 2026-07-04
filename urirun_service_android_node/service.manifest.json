@@ -1,0 +1,40 @@
+{
+  "id": "android-node",
+  "kind": "service",
+  "name": "urirun-service-android-node",
+  "label": "Android setup and webpage-node relay service",
+  "defaultHost": "0.0.0.0",
+  "defaultPort": 8195,
+  "env": {
+    "host": "URIRUN_ANDROID_NODE_HOST",
+    "port": "URIRUN_ANDROID_NODE_PORT",
+    "apkDir": "URIRUN_ANDROID_NODE_APK_DIR",
+    "apkDirs": "URIRUN_ANDROID_NODE_APK_DIRS"
+  },
+  "routes": [
+    "android://node/setup/query/status",
+    "android://node/setup/command/connect",
+    "webpage://{id}/page/query/info",
+    "webpage://{id}/page/query/devices",
+    "webpage://{id}/camera/command/start"
+  ],
+  "http": {
+    "index": "/",
+    "api": [
+      "/api/status",
+      "/api/connect",
+      "/bootstrap.sh",
+      "/qr.png",
+      "/apk/",
+      "/apk/<file>",
+      "/plugins",
+      "/plugins/chrome.zip",
+      "/plugins/firefox.zip",
+      "/api/web-node/list",
+      "/api/webpage-node/list",
+      "/api/web-node/relay/<id>/health",
+      "/api/web-node/relay/<id>/routes",
+      "/api/web-node/relay/<id>/run"
+    ]
+  }
+}
