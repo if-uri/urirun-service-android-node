@@ -306,9 +306,9 @@ def _bootstrap_script_path(override: str | None) -> pathlib.Path | None:
     if override:
         p = pathlib.Path(override)
         return p if p.exists() else None
-    # default: alongside this package in android-node-app/
+    # Development default: canonical Android application repository.
     candidates = [
-        pathlib.Path(__file__).parent.parent.parent / "android-node-app" / "bootstrap.sh",
+        pathlib.Path(__file__).parent.parent.parent / "urirun-android-node-app" / "scripts" / "bootstrap-termux.sh",
         pathlib.Path.home() / ".urirun" / "android-node" / "bootstrap.sh",
     ]
     for c in candidates:
@@ -543,7 +543,7 @@ def _apk_dirs() -> list[pathlib.Path]:
     """APK search path for /apk/ distribution.
 
     The package-local apk/ directory is the stable distribution location, while
-    android-node-app/bin is where Buildozer usually writes debug APKs during
+    urirun-android-node-app/bin is where Buildozer writes debug APKs during
     local development.
     """
     candidates: list[pathlib.Path] = []
@@ -553,7 +553,6 @@ def _apk_dirs() -> list[pathlib.Path]:
     candidates.extend([
         _APK_DIR,
         _repo_root() / "urirun-android-node-app" / "bin",
-        _repo_root() / "android-node-app" / "bin",
         pathlib.Path.home() / ".urirun" / "android-node" / "apk",
     ])
     out: list[pathlib.Path] = []

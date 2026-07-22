@@ -39,8 +39,7 @@ The service checks these directories (first match wins per filename):
 1. `URIRUN_ANDROID_NODE_APK_DIRS` or `URIRUN_ANDROID_NODE_APK_DIR` (env override)
 2. `urirun-service-android-node/apk/` ← stable distribution location
 3. `urirun-android-node-app/bin/` ← Buildozer output
-4. `android-node-app/bin/`
-5. `~/.urirun/android-node/apk/`
+4. `~/.urirun/android-node/apk/`
 
 To build and publish a new APK:
 
