@@ -30,7 +30,7 @@ import subprocess
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Sequence
-from urllib.parse import quote, unquote, urlsplit
+from urllib.parse import parse_qsl, quote, unquote, urlencode, urlsplit, urlunsplit
 import urllib.request
 
 
@@ -162,7 +162,25 @@ def _scanner_page_url(base_url: str) -> str:
         from urirun_scanner.scanner_net import _scanner_page_url as _real_scanner_page_url
         return _real_scanner_page_url(base_url)
     except Exception:  # noqa: BLE001 - standalone setup service fallback
-        return base_url.rstrip("/") + "/scanner"
+        parts = urlsplit(base_url)
+        query = dict(parse_qsl(parts.query, keep_blank_values=True))
+        defaults = {
+            "autostart": os.environ.get("URIRUN_PHONE_SCANNER_AUTOSTART", "1"),
+            "auto": os.environ.get("URIRUN_PHONE_SCANNER_AUTO", "1"),
+            "best": os.environ.get("URIRUN_PHONE_SCANNER_BEST", "1"),
+            "count": os.environ.get("URIRUN_PHONE_SCANNER_BEST_COUNT", "6"),
+            "minScore": os.environ.get("URIRUN_PHONE_SCANNER_MIN_SCORE", "45"),
+            "interval": os.environ.get("URIRUN_PHONE_SCANNER_INTERVAL", "3"),
+        }
+        for key, value in defaults.items():
+            query.setdefault(key, value)
+        return urlunsplit((
+            parts.scheme,
+            parts.netloc,
+            parts.path or "/scanner",
+            urlencode(query),
+            parts.fragment,
+        ))
 
 
 def _host_dashboard_json(dashboard_base: str, path: str, timeout: float = 1.5) -> dict:
