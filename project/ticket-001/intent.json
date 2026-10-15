@@ -1,10 +1,12 @@
 {
-  "$schema": "../../.governance/intent.schema.json",
   "schema": "new-project.intent/v3",
   "ticket": "ticket-001",
+  "summary": "Adopt wellmanifest/new-project 0.20.35",
   "workstream": "governance",
   "classification": {
-    "workType": "standard-adoption"
+    "kind": "SERVICE",
+    "priority": "P2",
+    "origin": "requested"
   },
   "allowedPaths": [
     "**"
@@ -61,9 +63,11 @@
     "runtimeDependencies": [],
     "validation": [
       {
-        "command": "bash project/governance-check.sh",
-        "purpose": "Verify governance compliance",
-        "verifies": "governance"
+        "criterion": "AC-01",
+        "commands": [
+          "bash project/governance-check.sh"
+        ],
+        "evidence": "Governance check passes."
       }
     ]
   }
